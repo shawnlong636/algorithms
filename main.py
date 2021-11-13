@@ -1,7 +1,12 @@
 import unittest
+import sys
+import logging
 import test  
 
 def main():
+    logging.basicConfig( stream=sys.stderr )
+    logging.getLogger( "test.graph" ).setLevel( logging.DEBUG )
+
     loader = unittest.TestLoader()
     suite = loader.discover('./test')
     runner = unittest.TextTestRunner(verbosity=2)
