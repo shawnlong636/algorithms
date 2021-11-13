@@ -32,3 +32,4 @@ def merge(left_array: [int], right_array: [int]) -> [int]:
         right_index += 1
         
     return new_array
+    
