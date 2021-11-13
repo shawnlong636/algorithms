@@ -1,6 +1,36 @@
 import unittest
 import logging
+import networkx as nx
 from alg import graph
+
+class sample_graphs:
+
+    samples = []
+
+    samples.append(nx.Graph())
+    samples[0].add_edge('a', 'b', weight = 1)
+    samples[0].add_edge('a', 'e', weight = 3)
+    samples[0].add_edge('a', 'd', weight = 4)
+    samples[0].add_edge('b', 'e', weight = 2)
+    samples[0].add_edge('b', 'd', weight = 4)
+    samples[0].add_edge('d', 'e', weight = 4)
+    samples[0].add_edge('e', 'c', weight = 4)
+    samples[0].add_edge('e', 'f', weight = 7)
+    samples[0].add_edge('c', 'f', weight = 3)
+
+    adj_list = [
+        "0 1 4 5",
+        "1 0 2 6",
+        "2 1 3 7",
+        "3 2 4 6",
+        "4 0 3 5 8 9",
+        "5 0 4 7",
+        "6 1 8 9",
+        "7 2 5 9",
+        "8 3 4 6",
+        "9 4 6 7"
+    ]
+    samples.append(nx.parse_adjlist(adj_list, nodetype = int))
 
 class TestGraphMethods(unittest.TestCase):
     
@@ -65,6 +95,30 @@ class TestGraphMethods(unittest.TestCase):
 
         with self.assertRaises(Exception):
             ff2(table2, (9,999), -1,)
+
+class TestDisjointSet(unittest.TestCase):
+
+    def test_constructor(self):
+        dj1 = graph.DisjointSet()
+        self.assertEqual(dj1.set_map, {})
+
+        dj2 = graph.DisjointSet([])
+        self.assertEqual(dj2.set_map, {})
+
+        dj3 = graph.DisjointSet([0, 0, 0, 0])
+        self.assertEqual(dj3.set_map, {0: 0})
+
+        dj4 = graph.DisjointSet([0, 1, 2, 4])
+        self.assertEqual(dj4.set_map, {0: 0, 1: 1, 2: 2, 4: 4})
+
+    def test_from_graph(self):
+        dj = graph.DisjointSet(sample_graphs.samples[0])
+
+        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.samples[0].nodes()})
+
+        dj = graph.DisjointSet(sample_graphs.samples[1])
+
+        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.samples[1].nodes()})
 
 if __name__ == '__main__':
     unittest.main()
