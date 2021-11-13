@@ -5,18 +5,16 @@ from alg import graph
 
 class sample_graphs:
 
-    samples = []
-
-    samples.append(nx.Graph())
-    samples[0].add_edge('a', 'b', weight = 1)
-    samples[0].add_edge('a', 'e', weight = 3)
-    samples[0].add_edge('a', 'd', weight = 4)
-    samples[0].add_edge('b', 'e', weight = 2)
-    samples[0].add_edge('b', 'd', weight = 4)
-    samples[0].add_edge('d', 'e', weight = 4)
-    samples[0].add_edge('e', 'c', weight = 4)
-    samples[0].add_edge('e', 'f', weight = 7)
-    samples[0].add_edge('c', 'f', weight = 3)
+    WEIGHTED1 = nx.Graph()
+    WEIGHTED1.add_edge('a', 'b', weight = 1)
+    WEIGHTED1.add_edge('a', 'e', weight = 3)
+    WEIGHTED1.add_edge('a', 'd', weight = 4)
+    WEIGHTED1.add_edge('b', 'e', weight = 2)
+    WEIGHTED1.add_edge('b', 'd', weight = 4)
+    WEIGHTED1.add_edge('d', 'e', weight = 4)
+    WEIGHTED1.add_edge('e', 'c', weight = 4)
+    WEIGHTED1.add_edge('e', 'f', weight = 7)
+    WEIGHTED1.add_edge('c', 'f', weight = 3)
 
     adj_list = [
         "0 1 4 5",
@@ -30,7 +28,8 @@ class sample_graphs:
         "8 3 4 6",
         "9 4 6 7"
     ]
-    samples.append(nx.parse_adjlist(adj_list, nodetype = int))
+
+    UNWEIGHTED1 = nx.parse_adjlist(adj_list, nodetype = int)
 
 class TestGraphMethods(unittest.TestCase):
     
@@ -112,13 +111,13 @@ class TestDisjointSet(unittest.TestCase):
         self.assertEqual(dj4.set_map, {0: 0, 1: 1, 2: 2, 4: 4})
 
     def test_from_graph(self):
-        dj = graph.DisjointSet(sample_graphs.samples[0])
+        dj = graph.DisjointSet(sample_graphs.WEIGHTED1)
 
-        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.samples[0].nodes()})
+        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.WEIGHTED1.nodes()})
 
-        dj = graph.DisjointSet(sample_graphs.samples[1])
+        dj = graph.DisjointSet(sample_graphs.UNWEIGHTED1)
 
-        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.samples[1].nodes()})
+        self.assertEqual(dj.set_map, {node: node for node in sample_graphs.UNWEIGHTED1.nodes()})
 
 if __name__ == '__main__':
     unittest.main()
