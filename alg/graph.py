@@ -53,7 +53,7 @@ class DisjointSet:
         if self.set_map.get(node) == node:
             return node
         else:
-            return find(self.set_map[node])
+            return self.find(self.set_map[node])
 
     def union(self, node1, node2):
         root1 = self.find(node1)

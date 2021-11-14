@@ -119,6 +119,32 @@ class TestDisjointSet(unittest.TestCase):
 
         self.assertEqual(dj.set_map, {node: node for node in sample_graphs.UNWEIGHTED1.nodes()})
 
+    def test_find(self):
+        dj = graph.DisjointSet([0, 1, 2, 3, 4])
+
+        # Simulate merging 0 and 1
+        dj.set_map[1] = 0
+
+        # Simulate merging 3 and 2
+        dj.set_map[3] = 2
+
+        self.assertEqual(dj.find(0), 0)
+        self.assertEqual(dj.find(1), 0)
+        self.assertEqual(dj.find(2), 2)
+        self.assertEqual(dj.find(3), 2)
+        self.assertEqual(dj.find(4), 4)
+
+        # Simulate merging 4 and 3
+        root_4 = dj.set_map[4] # root of 4 is 4
+        root_3 = dj.set_map[3] # root of 3 is 2
+        dj.set_map[4] = 2
+
+        self.assertEqual(dj.find(0), 0)
+        self.assertEqual(dj.find(1), 0)
+        self.assertEqual(dj.find(2), 2)
+        self.assertEqual(dj.find(3), 2)
+        self.assertEqual(dj.find(4), 2)
+
 if __name__ == '__main__':
     unittest.main()
     
