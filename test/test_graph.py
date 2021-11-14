@@ -145,6 +145,25 @@ class TestDisjointSet(unittest.TestCase):
         self.assertEqual(dj.find(3), 2)
         self.assertEqual(dj.find(4), 2)
 
+    def test_union(self):
+        dj = graph.DisjointSet(['a', 'b', 'c', 'd', 'z'])
+
+        dj.union('a', 'd')
+        shouldEQ = {'a': 'd', 'b': 'b', 'c': 'c', 'd': 'd', 'z': 'z'}
+        self.assertEqual(dj.set_map, shouldEQ)
+
+        dj.union('c', 'b')
+        shouldEQ = {'a': 'd', 'b': 'b', 'c': 'b', 'd': 'd', 'z': 'z'}
+        self.assertEqual(dj.set_map, shouldEQ)
+
+        dj.union('z', 'a')
+        shouldEQ = {'a': 'd', 'b': 'b', 'c': 'b', 'd': 'd', 'z': 'd'}
+        self.assertEqual(dj.set_map, shouldEQ)
+
+        dj.union('c', 'z')
+        shouldEQ = {'a': 'd', 'b': 'd', 'c': 'b', 'd': 'd', 'z': 'd'}
+        self.assertEqual(dj.set_map, shouldEQ)
+
 if __name__ == '__main__':
     unittest.main()
     
