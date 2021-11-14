@@ -41,25 +41,24 @@ def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9
     return table2D
 
 class DisjointSet:
-	set_map = {}
+    set_map = {}
 
-	def __init__(self, nodes = []):
-		self.set_map = {node: node for node in nodes}
+    def __init__(self, nodes = []):
+	    self.set_map = {node: node for node in nodes}
 
-	def from_graph(self, graph: nx.Graph):
-		self.set_map = {node: node for node in graph.nodes()}
+    def from_graph(self, graph: nx.Graph):
+	    self.set_map = {node: node for node in graph.nodes()}
 
-	def find(self, node):
-        if self.set_map[node] == node:
+    def find(self, node):
+        if self.set_map.get(node) == node:
             return node
         else:
             return find(self.set_map[node])
 
-	def union(self, node1, node2):
+    def union(self, node1, node2):
         root1 = self.find(node1)
         root2 = self.find(node2)
         self.set_map[root1] = root2
 
-
-	def __str__(self):
-		return str(self.set_map)
+    def __str__(self):
+	    return str(self.set_map)
