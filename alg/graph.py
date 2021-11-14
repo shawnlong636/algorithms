@@ -43,28 +43,23 @@ def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9
 class DisjointSet:
 	set_map = {}
 
-	def __init__(self, nodes: [int] = []):
+	def __init__(self, nodes = []):
 		self.set_map = {node: node for node in nodes}
 
 	def from_graph(self, graph: nx.Graph):
 		self.set_map = {node: node for node in graph.nodes()}
 
-	def find(self, node1, node2) -> bool:
-		if not node1 in self.set_map:
-			raise ValueError(f'Node: {node1} not in set')
+	def find(self, node):
+        if self.set_map[node] == node:
+            return node
+        else:
+            return find(self.set_map[node])
 
-		if not node2 in self.set_map:
-			raise ValueError(f'Node: {node2} not in set')
+	def union(self, node1, node2):
+        root1 = self.find(node1)
+        root2 = self.find(node2)
+        self.set_map[root1] = root2
 
-		if self.set_map.get(node1) == self.set_map.get(node2):
-			return True
-
-		else:
-			return False
-
-	def union(self, node1: int, node2: int):
-		if not self.find(node1, node2):
-			self.set_map[node2] = self.set_map[node1]
 
 	def __str__(self):
 		return str(self.set_map)
