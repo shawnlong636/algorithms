@@ -14,3 +14,5 @@ This is a simple project with a collection of different algorithms in Python. I 
 ### Graph Algorithms
 
 - Flood Fill
+- Kruskal's Algorithm
+  - Disjoint Set Structure
