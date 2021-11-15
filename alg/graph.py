@@ -40,6 +40,26 @@ def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9
 
     return table2D
 
+def kruskal(graph: nx.graph):
+    mst = []
+    mst_val = 0
+
+    dj = DisjointSet()
+    dj.from_graph(graph)
+
+    edges = [(attr_dict['weight'], (x, y)) for x, y, attr_dict in graph.edges(data=True)]
+    edges = sorted(edges)
+
+    for weight, edge in edges:
+        x, y = edge
+
+        if not dj.find(x) == dj.find(y):
+            mst.append(edge)
+            mst_val += weight
+            dj.union(x,y)
+
+    return (mst, mst_val)
+
 class DisjointSet:
     set_map = {}
 

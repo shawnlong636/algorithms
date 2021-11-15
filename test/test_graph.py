@@ -31,6 +31,30 @@ class sample_graphs:
 
     UNWEIGHTED1 = nx.parse_adjlist(adj_list, nodetype = int)
 
+    WEIGHTED2 = nx.Graph()
+    WEIGHTED2.add_edge(7, 6, weight = 1)
+    WEIGHTED2.add_edge(8, 2, weight = 2)
+    WEIGHTED2.add_edge(6, 5, weight = 2)
+    WEIGHTED2.add_edge(0, 1, weight = 4)
+    WEIGHTED2.add_edge(2, 5, weight = 4)
+    WEIGHTED2.add_edge(8, 6, weight = 6)
+    WEIGHTED2.add_edge(2, 3, weight = 7)
+    WEIGHTED2.add_edge(7, 8, weight = 7)
+    WEIGHTED2.add_edge(0, 7, weight = 8)
+    WEIGHTED2.add_edge(1, 2, weight = 8)
+    WEIGHTED2.add_edge(3, 4, weight = 9)
+    WEIGHTED2.add_edge(5, 4, weight = 10)
+    WEIGHTED2.add_edge(1, 7, weight = 11)
+    WEIGHTED2.add_edge(3, 5, weight = 14)
+
+    WEIGHTED3 = nx.Graph()
+    WEIGHTED3.add_edge(0, 1, weight = 10)
+    WEIGHTED3.add_edge(0, 2, weight = 6)
+    WEIGHTED3.add_edge(0, 3, weight = 5)
+    WEIGHTED3.add_edge(1, 3, weight = 15)
+    WEIGHTED3.add_edge(2, 3, weight = 4)
+    
+
 class TestGraphMethods(unittest.TestCase):
     
     def test_flood_fill(self):
@@ -94,6 +118,35 @@ class TestGraphMethods(unittest.TestCase):
 
         with self.assertRaises(Exception):
             ff2(table2, (9,999), -1,)
+
+    def test_kruskal(self):
+        mst1, mst1_val = graph.kruskal(sample_graphs.WEIGHTED1)
+        self.assertEqual(mst1_val, 14)
+
+        mst1_set = set(mst1)
+        should_eq = set([('a','b'), ('a', 'd'), ('b', 'e'), 
+                        ('e','c'), ('c','f')])
+
+        self.assertEqual(mst1_set, should_eq)
+
+        mst2, mst2_val = graph.kruskal(sample_graphs.WEIGHTED2)
+        self.assertEqual(mst2_val, 37)
+
+        mst2_set = set(mst2)
+
+        should_eq2 = set([
+            (0, 1), (2, 1), (7, 6),
+            (6, 5), (2, 5), (8, 2),
+            (2, 3), (3, 4)
+        ])
+        self.assertEqual(mst2_set, should_eq2)
+
+        mst3, mst3_val = graph.kruskal(sample_graphs.WEIGHTED3)
+        self.assertEqual(mst3_val, 19)
+
+        mst3_set = set(mst3)
+        self.assertEqual(mst3_set, set([(2,3), (0,3), (0,1)]))
+        
 
 class TestDisjointSet(unittest.TestCase):
 
