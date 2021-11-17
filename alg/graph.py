@@ -1,7 +1,6 @@
 import heapq
 import networkx as nx
 from sys import maxsize
-import logging
 
 def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9):
 
@@ -63,8 +62,6 @@ def kruskal(graph: nx.graph):
     return (mst, mst_val)
 
 def prim(graph: nx.Graph):
-
-    log = logging.getLogger('graph.prim')
 
     # Begin prim's algorithm from some arbitrary node in the graph
     start_node = list(graph.nodes())[0]
