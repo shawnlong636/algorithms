@@ -145,8 +145,7 @@ class TestGraphMethods(unittest.TestCase):
         self.assertEqual(mst3_val, 19)
 
         mst3_set = set(mst3)
-        self.assertEqual(mst3_set, set([(2,3), (0,3), (0,1)]))
-        
+        self.assertEqual(mst3_set, set([(2,3), (0,3), (0,1)]))    
 
 class TestDisjointSet(unittest.TestCase):
 
