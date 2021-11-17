@@ -5,7 +5,7 @@ import test
 
 def main():
     logging.basicConfig( stream=sys.stderr )
-    logging.getLogger( "test.graph" ).setLevel( logging.DEBUG )
+    logging.getLogger( 'graph.prim' ).setLevel( logging.DEBUG )
 
     loader = unittest.TestLoader()
     suite = loader.discover('./test')

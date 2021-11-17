@@ -62,13 +62,15 @@ def kruskal(graph: nx.graph):
 
     return (mst, mst_val)
 
-def prim(graph: nx.graph):
+def prim(graph: nx.Graph):
+
+    log = logging.getLogger('graph.prim')
 
     # Begin prim's algorithm from some arbitrary node in the graph
-    start_node = graph.nodes()[0]
+    start_node = list(graph.nodes())[0]
 
     # Initialize the min weight to add to MST for each node to be infinity
-    min_weights = {node: sys.maxsize for node in graph.nodes()}
+    min_weights = {node: maxsize for node in graph.nodes()}
 
     # Since no min edge to add is found, set min_edge_from[node] to be None for all nodes
     min_edge_from = {node: None for node in graph.nodes()}
@@ -91,16 +93,18 @@ def prim(graph: nx.graph):
     # While the queue isn't empty
     while len(queue) > 0:
         # Pop the top element of the queue
-        node1 = heapq.heappop(queue)
+        _ , node1 = heapq.heappop(queue)
 
         # For the first node, there's no actual edge, so don't add to MST
-        if len(mst) > 0:
+        if not node1 == start_node:
 
             # Append the min edge between node1 and the others in the MST
             mst += [(min_edge_from[node1], node1)]
 
             # Add the weight of the edge being added to the weight for the MST
-            mst_val += graph.get_edge_data(min_edge_from[node1], node1)['weight']
+            edge_weight = graph.get_edge_data(min_edge_from[node1], node1)['weight']
+            log.debug(f'Edge: {(min_edge_from[node1], node1)}: {edge_weight}')
+            mst_val += edge_weight
 
         # Add Node 1 to the set of visited nodes
         visited.add(node1)

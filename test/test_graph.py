@@ -147,6 +147,17 @@ class TestGraphMethods(unittest.TestCase):
         mst3_set = set(mst3)
         self.assertEqual(mst3_set, set([(2,3), (0,3), (0,1)]))    
 
+    def test_prim(self):
+        mst1, mst1_val = graph.prim(sample_graphs.WEIGHTED1)
+        
+        self.assertEqual(mst1_val, 14)
+
+        mst2, mst2_val = graph.prim(sample_graphs.WEIGHTED2)
+        self.assertEqual(mst2_val, 37)
+
+        mst3, mst3_val = graph.prim(sample_graphs.WEIGHTED3)
+        self.assertEqual(mst3_val, 19)  
+
 class TestDisjointSet(unittest.TestCase):
 
     def test_constructor(self):
