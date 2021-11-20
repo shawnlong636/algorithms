@@ -100,7 +100,6 @@ def prim(graph: nx.Graph):
 
             # Add the weight of the edge being added to the weight for the MST
             edge_weight = graph.get_edge_data(min_edge_from[node1], node1)['weight']
-            log.debug(f'Edge: {(min_edge_from[node1], node1)}: {edge_weight}')
             mst_val += edge_weight
 
         # Add Node 1 to the set of visited nodes
