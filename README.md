@@ -21,5 +21,5 @@ This is a simple project with a collection of different algorithms in Python. I 
 
 - Sum using Dynamic Parallelization
   - Divide & Conquer Approach (Recursive)
-- Sum using Chunking
+- Sum using Chunking 
   - Chunk size based on Available Processors
