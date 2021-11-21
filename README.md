@@ -16,6 +16,8 @@ This is a simple project with a collection of different algorithms in Python. I 
 - Flood Fill
 - Kruskal's Algorithm
   - Disjoint Set Structure
+- Depth First Search
+  - Check if Path Exists
 
 #### Parallel Algorithms
 
