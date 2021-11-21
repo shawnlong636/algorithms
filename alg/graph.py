@@ -41,7 +41,7 @@ def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9
 
     return table2D
 
-def kruskal(graph: nx.graph):
+def kruskal(graph: nx.Graph):
     mst = []
     mst_val = 0
 
@@ -133,11 +133,28 @@ def prim(graph: nx.Graph):
     
     return (mst, mst_val)
 
+def dfs(graph: nx.Graph, start_node, end_node):
 
+    def _dfs(graph: nx.Graph, node, visited = set(), parent_map = {}):
+        visited.add(node)
 
+        for neighbor in graph.neighbors(node):
+            if not neighbor in visited:
+                parent_map[neighbor] = node
+                return _dfs(graph, neighbor, visited, parent_map)
+        return parent_map
 
+    parent_map = _dfs(graph, start)
 
+    path = []
+    curr_node = end_node
 
+    while not curr_node == None:
+        path = [curr_node] + path
+        curr_node = parent_map.get(curr_node)
+
+    return path
+    
 class DisjointSet:
     set_map = {}
 
