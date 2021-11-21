@@ -4,8 +4,8 @@ import logging
 import test  
 
 def main():
-    logging.basicConfig( stream=sys.stderr )
-    logging.getLogger( 'graph.prim' ).setLevel( logging.DEBUG )
+    # logging.basicConfig( stream=sys.stderr )
+    # logging.getLogger( 'graph.prim' ).setLevel( logging.DEBUG )
 
     loader = unittest.TestLoader()
     suite = loader.discover('./test')
