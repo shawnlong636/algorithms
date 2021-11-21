@@ -11,8 +11,13 @@ This is a simple project with a collection of different algorithms in Python. I 
 - Recursive Multiplication
 - Karatusba Multiplication (Divide & Conquer)
 
-### Graph Algorithms
+#### Graph Algorithms
 
 - Flood Fill
 - Kruskal's Algorithm
   - Disjoint Set Structure
+
+#### Parallel Algorithms
+
+- Sum using Dynamic Parallelization
+  - Divide & Conquer Approach (Recursive)
