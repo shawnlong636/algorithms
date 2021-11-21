@@ -2,6 +2,7 @@ import unittest
 import logging
 import networkx as nx
 from alg import graph
+import matplotlib.pyplot as plt
 
 class sample_graphs:
 
@@ -52,8 +53,7 @@ class sample_graphs:
     WEIGHTED3.add_edge(0, 2, weight = 6)
     WEIGHTED3.add_edge(0, 3, weight = 5)
     WEIGHTED3.add_edge(1, 3, weight = 15)
-    WEIGHTED3.add_edge(2, 3, weight = 4)
-    
+    WEIGHTED3.add_edge(2, 3, weight = 4)   
 
 class TestGraphMethods(unittest.TestCase):
     
@@ -157,6 +157,24 @@ class TestGraphMethods(unittest.TestCase):
 
         mst3, mst3_val = graph.prim(sample_graphs.WEIGHTED3)
         self.assertEqual(mst3_val, 19)  
+
+    def test_dfs(self):
+
+        # Create Disconnected graph partions are {1,2,3,4} {5,7,8,9}
+        g = nx.Graph()
+        g.add_edge(1, 2)
+        g.add_edge(2,3)
+        g.add_edge(1,4)
+        g.add_edge(5,7)
+        g.add_edge(8,9)
+        g.add_edge(5,9)
+
+        self.assertNotEqual(graph.dfs(g, 1, 4), None)
+        self.assertEqual(graph.dfs(g, 1, 8), None)
+        self.assertEqual(graph.dfs(g,2,2), [2])
+        
+        with self.assertRaises(Exception):
+            graph.dfs(g,19,1)
 
 class TestDisjointSet(unittest.TestCase):
 

@@ -141,10 +141,12 @@ def dfs(graph: nx.Graph, start_node, end_node):
         for neighbor in graph.neighbors(node):
             if not neighbor in visited:
                 parent_map[neighbor] = node
-                return _dfs(graph, neighbor, visited, parent_map)
+
+                parent_map.update(_dfs(graph, neighbor, visited, parent_map))
+
         return parent_map
 
-    parent_map = _dfs(graph, start)
+    parent_map = _dfs(graph, start_node)
 
     path = []
     curr_node = end_node
@@ -153,7 +155,10 @@ def dfs(graph: nx.Graph, start_node, end_node):
         path = [curr_node] + path
         curr_node = parent_map.get(curr_node)
 
-    return path
+    if not (path[0] == start_node and path[-1] == end_node):
+        return None
+    else:
+        return path
     
 class DisjointSet:
     set_map = {}
