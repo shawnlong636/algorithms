@@ -1,6 +1,7 @@
 import heapq
 import networkx as nx
 from sys import maxsize
+import logging
 
 def flood_fill(table2D: [[int]], start_idx: (int, int) = (0,0), new_val: int = 9):
 
@@ -159,7 +160,57 @@ def dfs(graph: nx.Graph, start_node, end_node):
         return None
     else:
         return path
+
+def dijkstra(graph, start_node, end_node):
+    log = logging.getLogger('graph')
+    parent_map = {}
+    visited = set()
+    distances = {node: maxsize for node in graph.nodes()}
+    distances[start_node] = 0
+    queue = []
+
+    heapq.heappush(queue, (0, start_node))
+
+    while len(queue) > 0:
+        _ , node = heapq.heappop(queue)
+        visited.add(node)
+
+        log.debug(f'Current Node: {node}')
+
+        for neighbor in graph.neighbors(node):
+            log.debug(f'Neighbor: {neighbor}')
+
+            if not neighbor in visited:
+                cur_distance = distances[node] + graph.get_edge_data(node, neighbor)['weight']
+
+                if cur_distance < distances[neighbor]:
+                    distances[neighbor] = cur_distance
+                    parent_map[neighbor] = node
+                    
+                    # Lookup the idx of the neighbor if it exists in the queue, otherwise idx = None
+                    idx_in_queue = next((idx for idx, pair in enumerate(queue) if pair[1] == neighbor), None)
+
+                    if not idx_in_queue == None:
+                        queue[idx_in_queue] = (cur_distance, neighbor)
+                        heapq.heapify(queue)
+                    else:
+                        heapq.heappush(queue, (cur_distance, neighbor))
+
     
+    # Trace the return path
+    path = []
+    cur_node = end_node
+    distance = distances[end_node]
+
+    while not cur_node == None:
+        path = [cur_node] + path
+        cur_node = parent_map.get(cur_node)
+
+    if not (path[0] == start_node and path[-1] == end_node):
+        return (None, None)
+    else:
+        return (path, distances[end_node])
+
 class DisjointSet:
     set_map = {}
 

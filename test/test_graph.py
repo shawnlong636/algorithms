@@ -53,7 +53,34 @@ class sample_graphs:
     WEIGHTED3.add_edge(0, 2, weight = 6)
     WEIGHTED3.add_edge(0, 3, weight = 5)
     WEIGHTED3.add_edge(1, 3, weight = 15)
-    WEIGHTED3.add_edge(2, 3, weight = 4)   
+    WEIGHTED3.add_edge(2, 3, weight = 4)
+
+    DIGRAPH1 = nx.DiGraph()
+    DIGRAPH1.add_edge('a', 'b', weight = 1)
+    DIGRAPH1.add_edge('a', 'e', weight = 3)
+    DIGRAPH1.add_edge('a', 'd', weight = 4)
+    DIGRAPH1.add_edge('b', 'e', weight = 2)
+    DIGRAPH1.add_edge('b', 'd', weight = 4)
+    DIGRAPH1.add_edge('d', 'e', weight = 4)
+    DIGRAPH1.add_edge('e', 'c', weight = 4)
+    DIGRAPH1.add_edge('e', 'f', weight = 7)
+    DIGRAPH1.add_edge('c', 'f', weight = 3)
+
+    DIGRAPH2 = nx.DiGraph()
+    DIGRAPH2.add_edge(7, 6, weight = 1)
+    DIGRAPH2.add_edge(8, 2, weight = 2)
+    DIGRAPH2.add_edge(6, 5, weight = 2)
+    DIGRAPH2.add_edge(0, 1, weight = 4)
+    DIGRAPH2.add_edge(2, 5, weight = 4)
+    DIGRAPH2.add_edge(8, 6, weight = 6)
+    DIGRAPH2.add_edge(2, 3, weight = 7)
+    DIGRAPH2.add_edge(7, 8, weight = 7)
+    DIGRAPH2.add_edge(0, 7, weight = 8)
+    DIGRAPH2.add_edge(1, 2, weight = 8)
+    DIGRAPH2.add_edge(3, 4, weight = 9)
+    DIGRAPH2.add_edge(5, 4, weight = 10)
+    DIGRAPH2.add_edge(1, 7, weight = 11)
+    DIGRAPH2.add_edge(3, 5, weight = 14)
 
 class TestGraphMethods(unittest.TestCase):
     
@@ -175,6 +202,35 @@ class TestGraphMethods(unittest.TestCase):
         
         with self.assertRaises(Exception):
             graph.dfs(g,19,1)
+
+    def test_dijkstra(self):
+        log = logging.getLogger('graph')
+        def draw(g):
+            labels = nx.get_edge_attributes(g, 'weight')
+            pos = nx.spring_layout(g)
+            nx.draw(g, pos = pos, with_labels = True)
+            nx.draw_networkx_edge_labels(g, pos = pos, edge_labels = labels)
+            plt.show()
+
+        
+        g = sample_graphs.DIGRAPH1
+
+        path, dist = graph.dijkstra(g, 'a', 'c')
+        self.assertEqual(path, ['a','e','c'])
+        self.assertEqual(dist, 7)
+
+        path, dist = graph.dijkstra(g, 'b', 'a')
+        self.assertEqual(path, None)
+        self.assertEqual(dist, None)
+
+        g = sample_graphs.DIGRAPH2
+
+        path, dist = graph.dijkstra(g, 0, 5)
+        self.assertEqual(path, [0, 7, 6, 5])
+        self.assertEqual(dist, 11)
+
+        with self.assertRaises(Exception):
+            dijkstra(g, 'This isnt a node', 3)
 
 class TestDisjointSet(unittest.TestCase):
 

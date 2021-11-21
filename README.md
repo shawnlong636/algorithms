@@ -18,6 +18,8 @@ This is a simple project with a collection of different algorithms in Python. I 
   - Disjoint Set Structure
 - Depth First Search
   - Check if Path Exists
+- Dijkstra's Shortest Path
+  - Total Distance and Path Tracing
 
 #### Parallel Algorithms
 
