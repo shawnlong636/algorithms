@@ -60,3 +60,28 @@ def Sum(nums: [int]):
     main_process.join() # close the process and all its children
 
     return value
+
+def PoolSum(nums: [int]):
+
+    processors = int(mp.cpu_count())
+    partition_size = (len(nums) // processors)
+
+    vals = [0] * processors
+    results = [None] * processors
+
+    pool = mp.Pool(processors)
+
+    for i in range(processors):
+        start_idx = i*partition_size
+
+        if i == processors - 1:
+            end_idx = len(nums)
+        else:
+            end_idx = min(i*partition_size + partition_size, len(nums))
+
+        results[i]= pool.apply_async(np.sum, (nums[start_idx : end_idx],))
+
+    for i in range(processors):
+        vals[i] = results[i].get()
+    return sum(vals)
+    
